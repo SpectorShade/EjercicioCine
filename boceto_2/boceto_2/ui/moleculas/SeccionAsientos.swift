@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct SeccionAsientos: View {
-    @State var estados: [[Bool]] = Array(
+    @Binding var estados: [[Bool]] = Array(
         repeating: Array(repeating: false, count: 4),
         count: 3
     )
     
-    @State var asientoSeleccionado: (fila: Int, col: Int)? = nil
+    @Binding var asientoSeleccionado: (fila: Int, col: Int)? = nil
     
     var body: some View {
         VStack(spacing: 20) {
@@ -55,5 +55,15 @@ struct SeccionAsientos: View {
 }
 
 #Preview {
-    SeccionAsientos()
+    @Previewable @State var estadosPrevisualizar: [[Bool]] = Array(
+        repeating: Array(repeating: false, count: 4),
+        count: 3
+    )
+    @Previewable @State var asientoSel: (fila: Int, col: Int)? = nil
+
+    return SeccionAsientos(
+        estados: $estadosPrevisualizar,
+        asientoSeleccionado: $asientoSel
+    )
+    .padding()
 }
