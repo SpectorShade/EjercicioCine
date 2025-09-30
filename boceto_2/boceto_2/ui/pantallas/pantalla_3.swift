@@ -20,38 +20,38 @@ enum SaboresPalomitas: String, CaseIterable, Identifiable{
 struct PantallaOpciones: View {
     @State var quiere_palomitas: Bool = false
     @State var sabor_de_palomitas: SaboresPalomitas = .Mantequilla
+    @State var cantidad_palomitas: Double = 1
+    @State var quiere_soda = false
+    @State var nombre_cliente = ""
     
     var body: some View {
         ScrollView{
             VStack{
-                Text("Formulario para calcular la cantidad de palomitas")
-                HStack{
-                    Spacer()
-                    Text("¿Quieres Palomitas?")
-                    Spacer()
-                    cajita_seleccion(checado: $quiere_palomitas, tamaño: 25)
-                    Spacer()
-                }
-                if(quiere_palomitas){
-                    HStack{
-                        Text("¿Cual Sabor?")
-                        HStack{
-                            Picker(selection: $sabor_de_palomitas, label: Text("Sabor de Palomitas")) {
-                                Text("Mantequilla").tag(SaboresPalomitas.Mantequilla)
-                                Text("Naturales").tag(SaboresPalomitas.Natural)
-                                Text("Cheddar").tag(SaboresPalomitas.QuesoCheddar)
-                                Text("Doritos").tag(SaboresPalomitas.Doritos)
-                                Text("Proteina").tag(SaboresPalomitas.Proteina)
-                            }
-                        }
-                    }
-                }
-//                Text("Hola mundo el valor del slider es: \(valor_slider)")
-//                Slider(value: $valor_slider, in: 0...100)
+                Text("Formulario de Cinemexipolis")
+                    .font(.headline)    
+
+                SeccionNombre(nombre: $nombre_cliente)
                 
+                SeccionPalomitas(
+                    quiere: $quiere_palomitas,
+                    sabor: $sabor_de_palomitas,
+                    cantidad: $cantidad_palomitas
+                )
+                
+                SeccionSoda(quiere: $quiere_soda)
+
+                Button("Confirmar") {
+                    print("Cliente: \(nombre_cliente)")
+                    print("Palomitas: \(quiere_palomitas ? "\(sabor_de_palomitas.rawValue) x\(Int(cantidad_palomitas))" : "No")")
+                    print("Soda: \(quiere_soda ? "Sí" : "No")")
+                }
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
             }
-        }
-        
+            .padding()
+        } 
     }
 }
 
