@@ -23,6 +23,8 @@ struct PantallaOpciones: View {
     @State var cantidad_palomitas: Double = 1
     @State var quiere_soda = false
     @State var nombre_cliente = ""
+    @State var estadosAsientos: [[Bool]] = Array(repeating: Array(repeating: false, count: 4), count: 3)
+    @State var asientoSeleccionado: (fila: Int, col: Int)? = nil
     
     var body: some View {
         ScrollView{
@@ -40,10 +42,20 @@ struct PantallaOpciones: View {
                 
                 SeccionSoda(quiere: $quiere_soda)
 
+                SeccionAsientos(
+                    estados: $estadosAsientos,
+                    asientoSeleccionado: $asientoSeleccionado
+                )
+
                 Button("Confirmar") {
                     print("Cliente: \(nombre_cliente)")
                     print("Palomitas: \(quiere_palomitas ? "\(sabor_de_palomitas.rawValue) x\(Int(cantidad_palomitas))" : "No")")
                     print("Soda: \(quiere_soda ? "Sí" : "No")")
+                    if let sel = asientoSeleccionado {
+                        print("Asiento: Fila \(sel.fila+1), Columna \(sel.col+1)")
+                    } else {
+                        print("Asiento: No seleccionado")
+                    }
                 }
                 .padding()
                 .background(Color.blue)
