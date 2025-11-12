@@ -8,19 +8,14 @@
 import SwiftUI
 
 struct SeccionAsientos: View {
-    @Binding var estados: [[Bool]] = Array(
-        repeating: Array(repeating: false, count: 4),
-        count: 3
-    )
-    
-    @Binding var asientoSeleccionado: (fila: Int, col: Int)? = nil
+    @Binding var estados: [[Bool]]
+    @Binding var asientoSeleccionado: (fila: Int, col: Int)?
     
     var body: some View {
         VStack(spacing: 20) {
             Text("Esquema de Asientos")
                 .font(.headline)
 
-          //Jarvis me explico este ForEach para la forma en que funcionaria esto del grid de asientos
             ForEach(estados.indices, id: \.self) { fila in
                 HStack(spacing: 15) {
                     ForEach(estados[fila].indices, id: \.self) { columna in
@@ -29,11 +24,9 @@ struct SeccionAsientos: View {
                             numero: "\(fila+1)-\(columna+1)"
                         )
                         .onTapGesture {
-                            // Desmarcar asiento previo
                             if let previo = asientoSeleccionado {
                                 estados[previo.fila][previo.col] = false
                             }
-                            // Marcar el nuevo
                             estados[fila][columna] = true
                             asientoSeleccionado = (fila, columna)
                         }
@@ -43,8 +36,7 @@ struct SeccionAsientos: View {
         }
         .padding()
     }
-    
-    // El codigo de la silla o no si no se eligio
+
     func asientoSeleccionadoTexto() -> String {
         if let sel = asientoSeleccionado {
             return "Fila \(sel.fila+1), Columna \(sel.col+1)"
@@ -53,6 +45,7 @@ struct SeccionAsientos: View {
         }
     }
 }
+
 
 #Preview {
     @Previewable @State var estadosPrevisualizar: [[Bool]] = Array(

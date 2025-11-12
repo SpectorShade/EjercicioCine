@@ -61,6 +61,8 @@ struct PantallaOpciones: View {
                 .background(Color.blue)
                 .foregroundColor(.white)
                 .cornerRadius(10)
+                
+                Spacer(minLength: 80)
             }
             .padding()
         } 
